@@ -12,14 +12,12 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
+        delegate int chosenLogic(Point pos);
+        chosenLogic checkSurrounding;
         /// <summary>
         /// The universe is stored as [rows, columns]
         /// </summary>
         bool[,] universe;
-        /// <summary>
-        /// The temporary universe is stored as [rows, columns]
-        /// </summary>
-        bool[,] tempUniverse;
         int rows, columns;
         //Variables for mouseMove event
         Point lastChanged = new Point();
@@ -27,10 +25,9 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-            rows = columns = 50;
+            rows = columns = 100;
             universe = new bool[rows, columns];
-            tempUniverse = new bool[rows, columns];
-            universe[1, 1] = true;
+            checkSurrounding = getFWLiving;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -45,12 +42,13 @@ namespace WindowsFormsApplication1
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: Add restart functionality
+            universe = new bool[rows, columns];
+            gameTick.Enabled = false;
+            DBP.Invalidate();
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        private void DBP_MouseMove(object sender, MouseEventArgs e)
         {
-
             float collumnWidth, rowHeight;
             collumnWidth = (float)DBP.Width / columns;
             rowHeight = (float)DBP.Height / rows;
@@ -65,7 +63,7 @@ namespace WindowsFormsApplication1
                     DBP.Invalidate();
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
@@ -113,6 +111,85 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gameTick.Enabled = true;
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gameTick.Enabled = false;
+        }
+
+        private void gameTick_Tick(object sender, EventArgs e)
+        {
+            doGenerationLogic();
+        }
+
+        private void nextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            doGenerationLogic();
+        }
+
+        /// <summary>
+        /// Gets the finite world count of living cells around a position.
+        /// </summary>
+        /// <param name="pos">The position of the currently selected cell.</param>
+        /// <returns></returns>
+        int getFWLiving(Point pos)
+        {
+            int livingCount = 0;
+            for (int i = pos.X - 1; i <= pos.X + 1; i++)
+            {
+                if (i < 0 || i >= rows)
+                    continue;
+                for (int j = pos.Y - 1; j <= pos.Y + 1; j++)
+                {
+                    if (j < 0 || j >= columns ||(j == pos.Y && i == pos.X))
+                        continue;
+                    else if (universe[i, j])
+                        livingCount++;
+                }
+            }
+            return livingCount;
+        }
+
+
+        /// <summary>
+        /// Holds logic for updating the game through each generation.
+        /// </summary>
+        void doGenerationLogic()
+        {
+            /// <summary>
+            /// The temporary universe is stored as [rows, columns]
+            /// </summary>
+            bool[,] tempUniverse;
+            tempUniverse = new bool[rows, columns];
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    switch (checkSurrounding(new Point(i, j)))
+                    {
+                        case 2:
+                            if (universe[i, j])
+                                tempUniverse[i, j] = true;
+                            else tempUniverse[i, j] = false;
+                            break;
+                        case 3:
+                            tempUniverse[i, j] = true;
+                            break;
+                        default:
+                            tempUniverse[i, j] = false;
+                            break;
+                    }
+
+                }
+            }
+            universe = tempUniverse;
+            DBP.Invalidate();
         }
     }
 }
