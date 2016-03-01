@@ -21,6 +21,9 @@ namespace WindowsFormsApplication1
         /// </summary>
         bool[,] tempUniverse;
         int rows, columns;
+        //Variables for mouseMove event
+        Point lastChanged = new Point();
+        Point thisChanged = new Point();
         public Form1()
         {
             InitializeComponent();
@@ -28,14 +31,6 @@ namespace WindowsFormsApplication1
             universe = new bool[rows, columns];
             tempUniverse = new bool[rows, columns];
             universe[1, 1] = true;
-        }
-
-        private void customControl11_MouseClick(object sender, MouseEventArgs e)
-        {
-            float collumnWidth, rowHeight;
-            collumnWidth = (float)DBP.Width / columns;
-            rowHeight = (float)DBP.Height / rows;
-            DBP.Invalidate();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -51,6 +46,29 @@ namespace WindowsFormsApplication1
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //TODO: Add restart functionality
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            float collumnWidth, rowHeight;
+            collumnWidth = (float)DBP.Width / columns;
+            rowHeight = (float)DBP.Height / rows;
+            thisChanged.Y = (int)(e.Y / rowHeight);
+            thisChanged.X = (int)(e.X / collumnWidth);
+            try
+            {
+                if (e.Button == MouseButtons.Left && !thisChanged.Equals(lastChanged))
+                {
+                    universe[thisChanged.Y, thisChanged.X] = !universe[thisChanged.Y, thisChanged.X];
+                    lastChanged = thisChanged;
+                    DBP.Invalidate();
+                }
+            }
+            catch(Exception)
+            {
+
+            }
         }
 
         private void customControl11_Paint(object sender, PaintEventArgs e)

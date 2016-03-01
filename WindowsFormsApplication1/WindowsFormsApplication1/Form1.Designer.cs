@@ -201,7 +201,8 @@
             this.DBP.Size = new System.Drawing.Size(667, 399);
             this.DBP.TabIndex = 3;
             this.DBP.Paint += new System.Windows.Forms.PaintEventHandler(this.customControl11_Paint);
-            this.DBP.MouseClick += new System.Windows.Forms.MouseEventHandler(this.customControl11_MouseClick);
+            this.DBP.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.DBP.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             // 
             // Form1
             // 
@@ -215,6 +216,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "The Game of Life";
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
