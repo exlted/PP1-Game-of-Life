@@ -12,9 +12,12 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
+
+        int xSize, ySize;
         public Form1()
         {
             InitializeComponent();
+            xSize = ySize = 50;
         }
 
         private void customControl11_MouseClick(object sender, MouseEventArgs e)

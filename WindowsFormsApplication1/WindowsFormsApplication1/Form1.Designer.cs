@@ -31,7 +31,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.customControl11 = new WindowsFormsApplication1.CustomControl1();
+            this.DBP = new WindowsFormsApplication1.CustomControl1();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -61,22 +61,22 @@
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // customControl11
+            // DBP
             // 
-            this.customControl11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.customControl11.Location = new System.Drawing.Point(0, 49);
-            this.customControl11.Name = "customControl11";
-            this.customControl11.Size = new System.Drawing.Size(667, 405);
-            this.customControl11.TabIndex = 3;
-            this.customControl11.Paint += new System.Windows.Forms.PaintEventHandler(this.customControl11_Paint);
-            this.customControl11.MouseClick += new System.Windows.Forms.MouseEventHandler(this.customControl11_MouseClick);
+            this.DBP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DBP.Location = new System.Drawing.Point(0, 49);
+            this.DBP.Name = "DBP";
+            this.DBP.Size = new System.Drawing.Size(667, 405);
+            this.DBP.TabIndex = 3;
+            this.DBP.Paint += new System.Windows.Forms.PaintEventHandler(this.customControl11_Paint);
+            this.DBP.MouseClick += new System.Windows.Forms.MouseEventHandler(this.customControl11_MouseClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 476);
-            this.Controls.Add(this.customControl11);
+            this.Controls.Add(this.DBP);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -93,7 +93,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private CustomControl1 customControl11;
+        private CustomControl1 DBP;
     }
 }
 
