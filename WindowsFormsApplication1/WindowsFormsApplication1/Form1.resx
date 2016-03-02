@@ -164,37 +164,6 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <data name="toolStripButton2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC+SURBVDhPY0AH79+/F4AyyQPfvn17/+XLFwMol3QANOD/
-        89fP33///j0BKkQaABkQMy/i/6v3r/5//fq1ACpMPAAZYNFl8t9losP/S48ugQyZD5UiDsAMgBmy/tza
-        /0Cx80QHLrIBMDz9wNT/nz9/vk9U4GIzAITrN9eCXPIe6KUAqFLsgJABwNhxgCrFDrAZsPj4QnA4kOwF
-        UCDuvrITFBP7SQ7EgBk+5EcjxQkJiAmHNi5AdHzjAqRlZwYGAJPk4kfke6qGAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="toolStripButton3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG3SURBVFhH7Zc9TsNAEIVzDxpaOo7CDeACnIAmp6Cn4QDU
-        kSIa2oiaDpoIhAySf0oz3zITrTcb2xtbWgqe9Ap7ft56ZjKxF2NRluV5VVVL4bqu6zZGbPjgq2HT0TTN
-        lSTfhGIjuCFW06RDgk/9p91+V+3t82d7udq2Z/dv7cnda4fcw4YPvhZHDnJp2nGQoAsJLkz4+vF9T3CI
-        xHgHKcip6fuhJXeBDy9f0acdS2LJYfkGW6JP7pxvnj6iSY8huSzvwUrQJ3FwZZ9T3OgdoojOBMOCAyWL
-        JZiD1g60VPYX1neGZkrPh0huG8zOPMgN9zvvm/YQqXYjGmih6cTZWtzgZLEAY4hUu0+rgtuY0o8lFyyQ
-        mLMxRKrdJ1poor0bPrZYzNkYItXuEy09wJr+u4uh4QuRaveJlunuDhBz9Bki1R7y/wB/7wDZhjD7z5Bl
-        wEW2RZR9FQO5yPdnBHL8HUv5u29GNoxZXkhA9lcyQFnUadZDeOL7pQ9h8wAp2ZSZINbKDjuvYX3QSuT5
-        MDHQJ4ZFE7hkLBC2WKwq3MOGjyfsBu5gz8dAW3LUx2nyU/eBrSUJZ/48Xyx+AFHWUZukMcG8AAAAAElF
-        TkSuQmCC
-</value>
-  </data>
-  <data name="toolStripButton4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABNSURBVDhPYxgFmODr16/zv3379h8dg8ShSggDmCExE/b9
-        ZwieA6YJGoJsGzIm2hCQJEghPozXEKoYgA0T7QVkAFJEsWZ0TJTmEQkYGABbw+c72jh+IAAAAABJRU5E
-        rkJggg==
-</value>
-  </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>141, 17</value>
   </metadata>
