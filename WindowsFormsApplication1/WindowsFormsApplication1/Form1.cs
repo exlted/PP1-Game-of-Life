@@ -106,6 +106,11 @@ namespace WindowsFormsApplication1
             }
         }
 
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
         private void customControl11_Paint(object sender, PaintEventArgs e)
         {
             Pen newPen = new Pen(Color.Black);
