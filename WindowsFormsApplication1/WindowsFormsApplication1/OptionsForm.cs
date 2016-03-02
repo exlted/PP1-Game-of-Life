@@ -14,15 +14,17 @@ namespace WindowsFormsApplication1
     {
 
         public EventHandler<golEventArgs> returningInformation;
+        public golEventArgs previousData;
 
-        public OptionsForm()
+        public OptionsForm(Form1 form)
         {
             InitializeComponent();
+            
         }
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-
+            returningInformation(this, new golEventArgs(panelBackgroundColor.BackColor, livingCellColor.BackColor, normalGridColor.BackColor, highlightedGridColor.BackColor, isGridHighlighted.Checked, finite.Checked, (int)rowCount.Value, (int)colCount.Value));
         }
 
         private void resetButton_Click(object sender, EventArgs e)

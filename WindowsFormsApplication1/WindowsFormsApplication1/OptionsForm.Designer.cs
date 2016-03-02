@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.colorOptions = new System.Windows.Forms.TabPage();
             this.isGridHighlighted = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.highlightedGridColor = new System.Windows.Forms.Button();
@@ -42,15 +42,15 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
             this.acceptButton = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.gridOptions = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.cancel2Button = new System.Windows.Forms.Button();
             this.reset2Button = new System.Windows.Forms.Button();
             this.accept2Button = new System.Windows.Forms.Button();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.colCount = new System.Windows.Forms.NumericUpDown();
+            this.rowCount = new System.Windows.Forms.NumericUpDown();
+            this.edgeOptions = new System.Windows.Forms.TabPage();
             this.cancel3Button = new System.Windows.Forms.Button();
             this.reset3Button = new System.Windows.Forms.Button();
             this.accept3Button = new System.Windows.Forms.Button();
@@ -58,18 +58,18 @@
             this.finite = new System.Windows.Forms.RadioButton();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.colorOptions.SuspendLayout();
+            this.gridOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rowCount)).BeginInit();
+            this.edgeOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.colorOptions);
+            this.tabControl1.Controls.Add(this.gridOptions);
+            this.tabControl1.Controls.Add(this.edgeOptions);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -77,27 +77,27 @@
             this.tabControl1.Size = new System.Drawing.Size(264, 175);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // colorOptions
             // 
-            this.tabPage1.Controls.Add(this.isGridHighlighted);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.highlightedGridColor);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.normalGridColor);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.livingCellColor);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.panelBackgroundColor);
-            this.tabPage1.Controls.Add(this.cancelButton);
-            this.tabPage1.Controls.Add(this.resetButton);
-            this.tabPage1.Controls.Add(this.acceptButton);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(256, 149);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Color";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.colorOptions.Controls.Add(this.isGridHighlighted);
+            this.colorOptions.Controls.Add(this.label4);
+            this.colorOptions.Controls.Add(this.highlightedGridColor);
+            this.colorOptions.Controls.Add(this.label3);
+            this.colorOptions.Controls.Add(this.normalGridColor);
+            this.colorOptions.Controls.Add(this.label2);
+            this.colorOptions.Controls.Add(this.livingCellColor);
+            this.colorOptions.Controls.Add(this.label1);
+            this.colorOptions.Controls.Add(this.panelBackgroundColor);
+            this.colorOptions.Controls.Add(this.cancelButton);
+            this.colorOptions.Controls.Add(this.resetButton);
+            this.colorOptions.Controls.Add(this.acceptButton);
+            this.colorOptions.Location = new System.Drawing.Point(4, 22);
+            this.colorOptions.Name = "colorOptions";
+            this.colorOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.colorOptions.Size = new System.Drawing.Size(256, 149);
+            this.colorOptions.TabIndex = 0;
+            this.colorOptions.Text = "Color";
+            this.colorOptions.UseVisualStyleBackColor = true;
             // 
             // isGridHighlighted
             // 
@@ -214,21 +214,21 @@
             this.acceptButton.UseVisualStyleBackColor = true;
             this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
             // 
-            // tabPage3
+            // gridOptions
             // 
-            this.tabPage3.Controls.Add(this.label5);
-            this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Controls.Add(this.cancel2Button);
-            this.tabPage3.Controls.Add(this.reset2Button);
-            this.tabPage3.Controls.Add(this.accept2Button);
-            this.tabPage3.Controls.Add(this.numericUpDown2);
-            this.tabPage3.Controls.Add(this.numericUpDown1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(256, 149);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Grid";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.gridOptions.Controls.Add(this.label5);
+            this.gridOptions.Controls.Add(this.label6);
+            this.gridOptions.Controls.Add(this.cancel2Button);
+            this.gridOptions.Controls.Add(this.reset2Button);
+            this.gridOptions.Controls.Add(this.accept2Button);
+            this.gridOptions.Controls.Add(this.colCount);
+            this.gridOptions.Controls.Add(this.rowCount);
+            this.gridOptions.Location = new System.Drawing.Point(4, 22);
+            this.gridOptions.Name = "gridOptions";
+            this.gridOptions.Size = new System.Drawing.Size(256, 149);
+            this.gridOptions.TabIndex = 2;
+            this.gridOptions.Text = "Grid";
+            this.gridOptions.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -275,64 +275,64 @@
             this.accept2Button.Text = "OK";
             this.accept2Button.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown2
+            // colCount
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(73, 47);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.colCount.Location = new System.Drawing.Point(73, 47);
+            this.colCount.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.colCount.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown2.TabIndex = 1;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.colCount.Name = "colCount";
+            this.colCount.Size = new System.Drawing.Size(120, 20);
+            this.colCount.TabIndex = 1;
+            this.colCount.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
-            // numericUpDown1
+            // rowCount
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(73, 21);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.rowCount.Location = new System.Drawing.Point(73, 21);
+            this.rowCount.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.rowCount.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 0;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.rowCount.Name = "rowCount";
+            this.rowCount.Size = new System.Drawing.Size(120, 20);
+            this.rowCount.TabIndex = 0;
+            this.rowCount.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
-            // tabPage2
+            // edgeOptions
             // 
-            this.tabPage2.Controls.Add(this.cancel3Button);
-            this.tabPage2.Controls.Add(this.reset3Button);
-            this.tabPage2.Controls.Add(this.accept3Button);
-            this.tabPage2.Controls.Add(this.toriodal);
-            this.tabPage2.Controls.Add(this.finite);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(256, 149);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Edge Cases";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.edgeOptions.Controls.Add(this.cancel3Button);
+            this.edgeOptions.Controls.Add(this.reset3Button);
+            this.edgeOptions.Controls.Add(this.accept3Button);
+            this.edgeOptions.Controls.Add(this.toriodal);
+            this.edgeOptions.Controls.Add(this.finite);
+            this.edgeOptions.Location = new System.Drawing.Point(4, 22);
+            this.edgeOptions.Name = "edgeOptions";
+            this.edgeOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.edgeOptions.Size = new System.Drawing.Size(256, 149);
+            this.edgeOptions.TabIndex = 1;
+            this.edgeOptions.Text = "Edge Cases";
+            this.edgeOptions.UseVisualStyleBackColor = true;
             // 
             // cancel3Button
             // 
@@ -392,14 +392,14 @@
             this.Name = "OptionsForm";
             this.Text = "OptionsForm";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.colorOptions.ResumeLayout(false);
+            this.colorOptions.PerformLayout();
+            this.gridOptions.ResumeLayout(false);
+            this.gridOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rowCount)).EndInit();
+            this.edgeOptions.ResumeLayout(false);
+            this.edgeOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -407,8 +407,8 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage colorOptions;
+        private System.Windows.Forms.TabPage edgeOptions;
         private System.Windows.Forms.CheckBox isGridHighlighted;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button highlightedGridColor;
@@ -421,10 +421,10 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.Button acceptButton;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage gridOptions;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown colCount;
+        private System.Windows.Forms.NumericUpDown rowCount;
         private System.Windows.Forms.RadioButton toriodal;
         private System.Windows.Forms.RadioButton finite;
         private System.Windows.Forms.Button accept2Button;
