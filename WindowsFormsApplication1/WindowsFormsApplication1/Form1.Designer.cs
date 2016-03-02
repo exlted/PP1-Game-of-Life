@@ -61,18 +61,22 @@
             this.DBP = new WindowsFormsApplication1.CustomControl1();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripButton,
+            this.openToolStripButton,
+            this.saveToolStripButton,
+            this.toolStripButton1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(500, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
+            this.toolStrip1.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // newToolStripButton
             // 
@@ -82,7 +86,6 @@
             this.newToolStripButton.Name = "newToolStripButton";
             this.newToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.newToolStripButton.Text = "&New";
-            this.newToolStripButton.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripButton
             // 
@@ -318,8 +321,6 @@
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -354,13 +355,6 @@
         private System.Windows.Forms.Timer gameTick;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripStatusLabel GenerationLabel;
-        private System.Windows.Forms.ToolStripStatusLabel intervalLabel;
-        private System.Windows.Forms.ToolStripStatusLabel LivingCount;
-        private System.Windows.Forms.ToolStripStatusLabel SeedLabel;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
     }
 }
 

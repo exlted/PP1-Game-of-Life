@@ -18,17 +18,14 @@ namespace WindowsFormsApplication1
         /// The universe is stored as [rows, columns]
         /// </summary>
         bool[,] universe;
-        int rows = 50, columns = 50, generation = 0, livingCount = 0;
+        int rows, columns;
         //Variables for mouseMove event
         Point lastChanged = new Point();
         Point thisChanged = new Point();
-
-        //Hides simple methods that hold no logic
-        #region 1 line methods
-
         public Form1()
         {
             InitializeComponent();
+            rows = columns = 100;
             universe = new bool[rows, columns];
             checkSurrounding = getFWLiving;
         }
@@ -48,41 +45,7 @@ namespace WindowsFormsApplication1
             universe = new bool[rows, columns];
             gameTick.Enabled = false;
             DBP.Invalidate();
-            livingCount = 0;
-            generation = 0;
         }
-
-
-        private void runToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            gameTick.Enabled = true;
-        }
-
-        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            gameTick.Enabled = false;
-        }
-
-        private void gameTick_Tick(object sender, EventArgs e)
-        {
-            GenerationLabel.Text = "Generation: " + generation;
-            intervalLabel.Text = "Interval: " + gameTick.Interval;
-            LivingCount.Text = "Alive: " + livingCount;
-            SeedLabel.Text = "";
-            generation++;
-            doGenerationLogic();
-        }
-
-        private void nextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GenerationLabel.Text = "Generation: " + generation;
-            intervalLabel.Text = "Interval: " + gameTick.Interval;
-            LivingCount.Text = "Alive: " + livingCount;
-            SeedLabel.Text = "";
-            generation++;
-            doGenerationLogic();
-        }
-#endregion
 
         private void DBP_MouseMove(object sender, MouseEventArgs e)
         {
@@ -155,6 +118,26 @@ namespace WindowsFormsApplication1
             }
         }
 
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gameTick.Enabled = true;
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gameTick.Enabled = false;
+        }
+
+        private void gameTick_Tick(object sender, EventArgs e)
+        {
+            doGenerationLogic();
+        }
+
+        private void nextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            doGenerationLogic();
+        }
+
         /// <summary>
         /// Gets the finite world count of living cells around a position.
         /// </summary>
@@ -188,7 +171,6 @@ namespace WindowsFormsApplication1
             /// The temporary universe is stored as [rows, columns]
             /// </summary>
             bool[,] tempUniverse;
-            livingCount = 0;
             tempUniverse = new bool[rows, columns];
             for (int i = 0; i < rows; i++)
             {
@@ -197,11 +179,12 @@ namespace WindowsFormsApplication1
                     switch (checkSurrounding(new Point(i, j)))
                     {
                         case 2:
-                            tempUniverse[i, j] = universe[i, j];
+                            if (universe[i, j])
+                                tempUniverse[i, j] = true;
+                            else tempUniverse[i, j] = false;
                             break;
                         case 3:
                             tempUniverse[i, j] = true;
-                            livingCount++;
                             break;
                         default:
                             tempUniverse[i, j] = false;
