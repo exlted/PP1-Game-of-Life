@@ -16,10 +16,21 @@ namespace WindowsFormsApplication1
         public EventHandler<golEventArgs> returningInformation;
         public golEventArgs previousData;
 
-        public OptionsForm()
+        public OptionsForm(golEventArgs input)
         {
             InitializeComponent();
-            
+            previousData = input;
+            panelBackgroundColor.BackColor = previousData.deadColor;
+            livingCellColor.BackColor = previousData.livingColor;
+            normalGridColor.BackColor = previousData.gridColor;
+            highlightedGridColor.BackColor = previousData.highlightedGridColor;
+            isGridHighlighted.Checked = previousData.isHighlightingGrid;
+            finite.Checked = previousData.isFiniteWorld;
+            rowCount.Value = previousData.rowCount;
+            colCount.Value = previousData.columnCount;
+            if (previousData.isFiniteWorld)
+                finite.Checked = true;
+            else toriodal.Checked = true;
         }
 
         private void acceptButton_Click(object sender, EventArgs e)

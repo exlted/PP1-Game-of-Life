@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
         /// The universe is stored as [rows, columns]
         /// </summary>
         bool[,] universe;
-        bool isHighlighted, isFinite;
+        bool isHighlighted = true, isFinite = true;
         public int rows, columns;
         public Color deadColor = Color.White;
         public Color livingColor = Color.Black;
@@ -174,9 +174,8 @@ namespace WindowsFormsApplication1
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OptionsForm oForm = new OptionsForm();
+            OptionsForm oForm = new OptionsForm(new golEventArgs(deadColor, livingColor, gridColor, highlightedGridColor, isHighlighted, isFinite, rows, columns));
             oForm.returningInformation = informationReturn;
-            oForm.previousData = new golEventArgs(deadColor, livingColor, gridColor, highlightedGridColor, isHighlighted, isFinite, rows, columns);
             oForm.ShowDialog();
         }
 
@@ -190,10 +189,11 @@ namespace WindowsFormsApplication1
             isFinite = e.isFiniteWorld;
             rows = e.rowCount;
             columns = e.columnCount;
-
+            DBP.BackColor = deadColor;
             if (isFinite)
                 checkSurrounding = getFWLiving;
             else checkSurrounding = getTWliving;
+            DBP.Invalidate();
         }
 
         /// <summary>

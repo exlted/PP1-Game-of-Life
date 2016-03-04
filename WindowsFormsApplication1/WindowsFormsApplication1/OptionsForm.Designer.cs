@@ -125,7 +125,6 @@
             this.highlightedGridColor.Name = "highlightedGridColor";
             this.highlightedGridColor.Size = new System.Drawing.Size(75, 23);
             this.highlightedGridColor.TabIndex = 9;
-            this.highlightedGridColor.Text = "button7";
             this.highlightedGridColor.UseVisualStyleBackColor = false;
             this.highlightedGridColor.Click += new System.EventHandler(this.panelBackgroundColor_Click);
             // 
@@ -145,7 +144,6 @@
             this.normalGridColor.Name = "normalGridColor";
             this.normalGridColor.Size = new System.Drawing.Size(75, 23);
             this.normalGridColor.TabIndex = 7;
-            this.normalGridColor.Text = "button6";
             this.normalGridColor.UseVisualStyleBackColor = false;
             this.normalGridColor.Click += new System.EventHandler(this.panelBackgroundColor_Click);
             // 
@@ -165,7 +163,6 @@
             this.livingCellColor.Name = "livingCellColor";
             this.livingCellColor.Size = new System.Drawing.Size(75, 23);
             this.livingCellColor.TabIndex = 5;
-            this.livingCellColor.Text = "button5";
             this.livingCellColor.UseVisualStyleBackColor = false;
             this.livingCellColor.Click += new System.EventHandler(this.panelBackgroundColor_Click);
             // 
