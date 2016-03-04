@@ -419,6 +419,7 @@
             this.button1.TabIndex = 15;
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // button2
             // 
@@ -428,6 +429,7 @@
             this.button2.TabIndex = 14;
             this.button2.Text = "Reset";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // button3
             // 
@@ -437,6 +439,7 @@
             this.button3.TabIndex = 13;
             this.button3.Text = "OK";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // timerTicks
             // 

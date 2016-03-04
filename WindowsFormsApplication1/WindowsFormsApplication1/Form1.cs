@@ -91,6 +91,23 @@ namespace WindowsFormsApplication1
             oForm.ShowDialog();
         }
 
+        private void randomizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            seed = r.Next();
+            r = new Random(seed);
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (r.Next(3) == 0)
+                        universe[i, j] = true;
+                    else universe[i, j] = false;
+                }
+            }
+            alive = getLiving();
+            DBP.Invalidate();
+        }
+
         #endregion Single Line Functions
 
         #region DBP functions
@@ -117,11 +134,14 @@ namespace WindowsFormsApplication1
             catch (Exception)
             {
             }
-            LivingCount.Text = "Alive: " + alive;
         }
 
         private void customControl11_Paint(object sender, PaintEventArgs e)
         {
+            GenerationLabel.Text = "Generation: " + ++generation;
+            LivingCount.Text = "Alive: " + alive;
+            intervalLabel.Text = "Interval: " + msPerTick;
+            SeedLabel.Text = "Seed " + seed;
             Pen newPen = new Pen(gridColor);
             Pen bigPen = new Pen(highlightedGridColor, 2);
             float collumnWidth, rowHeight;
@@ -163,7 +183,7 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-
+        
         #endregion DBP functions
 
         #region GoL Logical Functions
@@ -310,10 +330,6 @@ namespace WindowsFormsApplication1
                 }
             }
             alive = getLiving();
-            GenerationLabel.Text = "Generation: " + ++generation;
-            LivingCount.Text = "Alive: " + alive;
-            intervalLabel.Text = "Interval: " + msPerTick;
-            SeedLabel.Text = "Seed " + seed;
             universe = tempUniverse;
             DBP.Invalidate();
         }
