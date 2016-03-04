@@ -127,6 +127,7 @@
             this.highlightedGridColor.TabIndex = 9;
             this.highlightedGridColor.Text = "button7";
             this.highlightedGridColor.UseVisualStyleBackColor = false;
+            this.highlightedGridColor.Click += new System.EventHandler(this.panelBackgroundColor_Click);
             // 
             // label3
             // 
@@ -146,6 +147,7 @@
             this.normalGridColor.TabIndex = 7;
             this.normalGridColor.Text = "button6";
             this.normalGridColor.UseVisualStyleBackColor = false;
+            this.normalGridColor.Click += new System.EventHandler(this.panelBackgroundColor_Click);
             // 
             // label2
             // 
@@ -165,6 +167,7 @@
             this.livingCellColor.TabIndex = 5;
             this.livingCellColor.Text = "button5";
             this.livingCellColor.UseVisualStyleBackColor = false;
+            this.livingCellColor.Click += new System.EventHandler(this.panelBackgroundColor_Click);
             // 
             // label1
             // 
@@ -183,6 +186,7 @@
             this.panelBackgroundColor.Size = new System.Drawing.Size(75, 23);
             this.panelBackgroundColor.TabIndex = 3;
             this.panelBackgroundColor.UseVisualStyleBackColor = false;
+            this.panelBackgroundColor.Click += new System.EventHandler(this.panelBackgroundColor_Click);
             // 
             // cancelButton
             // 

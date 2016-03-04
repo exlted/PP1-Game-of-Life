@@ -18,7 +18,12 @@ namespace WindowsFormsApplication1
         /// The universe is stored as [rows, columns]
         /// </summary>
         bool[,] universe;
-        int rows, columns;
+        bool isHighlighted, isFinite;
+        public int rows, columns;
+        public Color deadColor = Color.White;
+        public Color livingColor = Color.Black;
+        public Color gridColor = Color.Black;
+        public Color highlightedGridColor = Color.Black;
         //Variables for mouseMove event
         Point lastChanged = new Point();
         Point thisChanged = new Point();
@@ -76,15 +81,15 @@ namespace WindowsFormsApplication1
 
         private void customControl11_Paint(object sender, PaintEventArgs e)
         {
-            Pen newPen = new Pen(Color.Black);
-            Pen bigPen = new Pen(Color.Black, 2);
+            Pen newPen = new Pen(gridColor);
+            Pen bigPen = new Pen(highlightedGridColor, 2);
             float collumnWidth, rowHeight;
             collumnWidth = (float)DBP.Width / columns;
             rowHeight = (float)DBP.Height / rows;
             float seperatorPos = 0;
             for (int i = 0; i < columns; i++)
             {
-                if(i % 5 == 0)
+                if(i % 5 == 0 && isHighlighted)
                 {
                     e.Graphics.DrawLine(bigPen, seperatorPos, 0f, seperatorPos, DBP.Height);
                 }
@@ -96,7 +101,7 @@ namespace WindowsFormsApplication1
             seperatorPos = 0;
             for (int i = 0; i < rows; i++)
             {
-                if (i % 5 == 0)
+                if (i % 5 == 0 && isHighlighted)
                 {
                     e.Graphics.DrawLine(bigPen, 0f, seperatorPos, DBP.Width, seperatorPos);
                 }
@@ -111,8 +116,9 @@ namespace WindowsFormsApplication1
                 {
                     if (universe[i, j])
                     {
+                        
                         Rectangle temp = new Rectangle((int)((j * collumnWidth + 1)), (int)((i * rowHeight) + 1), (int)(collumnWidth + 1), (int)(rowHeight + 1));
-                        e.Graphics.FillRectangle(Brushes.Black, temp);
+                        e.Graphics.FillRectangle(new SolidBrush(livingColor), temp);
                     }
                 }
             }
@@ -161,6 +167,34 @@ namespace WindowsFormsApplication1
             return livingCount;
         }
 
+        int getTWliving(Point pos)
+        {
+            return 3;
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsForm oForm = new OptionsForm();
+            oForm.returningInformation = informationReturn;
+            oForm.previousData = new golEventArgs(deadColor, livingColor, gridColor, highlightedGridColor, isHighlighted, isFinite, rows, columns);
+            oForm.ShowDialog();
+        }
+
+        public void informationReturn(object sender, golEventArgs e)
+        {
+            deadColor = e.deadColor;
+            livingColor = e.livingColor;
+            gridColor = e.gridColor;
+            highlightedGridColor = e.highlightedGridColor;
+            isHighlighted = e.isHighlightingGrid;
+            isFinite = e.isFiniteWorld;
+            rows = e.rowCount;
+            columns = e.columnCount;
+
+            if (isFinite)
+                checkSurrounding = getFWLiving;
+            else checkSurrounding = getTWliving;
+        }
 
         /// <summary>
         /// Holds logic for updating the game through each generation.

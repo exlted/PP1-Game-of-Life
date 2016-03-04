@@ -16,7 +16,7 @@ namespace WindowsFormsApplication1
         public EventHandler<golEventArgs> returningInformation;
         public golEventArgs previousData;
 
-        public OptionsForm(Form1 form)
+        public OptionsForm()
         {
             InitializeComponent();
             
@@ -25,15 +25,32 @@ namespace WindowsFormsApplication1
         private void acceptButton_Click(object sender, EventArgs e)
         {
             returningInformation(this, new golEventArgs(panelBackgroundColor.BackColor, livingCellColor.BackColor, normalGridColor.BackColor, highlightedGridColor.BackColor, isGridHighlighted.Checked, finite.Checked, (int)rowCount.Value, (int)colCount.Value));
+            Close();
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-
+            panelBackgroundColor.BackColor = previousData.deadColor;
+            livingCellColor.BackColor = previousData.livingColor;
+            normalGridColor.BackColor = previousData.gridColor;
+            highlightedGridColor.BackColor = previousData.highlightedGridColor;
+            isGridHighlighted.Checked = previousData.isHighlightingGrid;
+            finite.Checked = previousData.isFiniteWorld;
+            rowCount.Value = previousData.rowCount;
+            colCount.Value = previousData.columnCount;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        private void panelBackgroundColor_Click(object sender, EventArgs e)
+        {
+            if(colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                (sender as Button).BackColor = colorDialog1.Color;
+            }
 
         }
     }
