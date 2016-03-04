@@ -29,7 +29,6 @@ namespace WindowsFormsApplication1
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            //panelBackgroundColor.BackColor, livingCellColor.BackColor, normalGridColor.BackColor, highlightedGridColor.BackColor, isGridHighlighted.Checked, finite.Checked, (int)rowCount.Value, (int)colCount.Value), (int)timerTicks.Value
             returningInformation(this, new golEventArgs(panelBackgroundColor.BackColor, livingCellColor.BackColor, normalGridColor.BackColor, highlightedGridColor.BackColor, isGridHighlighted.Checked, finite.Checked, (int)rowCount.Value, (int)colCount.Value, (int)timerTicks.Value));
             Close();
         }
