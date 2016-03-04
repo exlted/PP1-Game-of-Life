@@ -183,7 +183,7 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-        
+
         #endregion DBP functions
 
         #region GoL Logical Functions
@@ -276,14 +276,17 @@ namespace WindowsFormsApplication1
             highlightedGridColor = e.highlightedGridColor;
             isHighlighted = e.isHighlightingGrid;
             isFinite = e.isFiniteWorld;
-            rows = e.rowCount;
-            columns = e.columnCount;
             msPerTick = gameTick.Interval = e.msPerTick;
             DBP.BackColor = deadColor;
             if (isFinite)
                 checkSurrounding = getFWLiving;
             else checkSurrounding = getTWliving;
-            universe = new bool[rows, columns];
+            if(rows!=e.rowCount && columns !=e.columnCount)
+            {
+                rows = e.rowCount;
+                columns = e.columnCount;
+                universe = new bool[rows, columns];
+            }
             Properties.Settings.Default.DeadColor = deadColor;
             Properties.Settings.Default.LivingColor = livingColor;
             Properties.Settings.Default.GridColor = gridColor;
@@ -335,5 +338,23 @@ namespace WindowsFormsApplication1
         }
 
         #endregion GoL Logical Functions
+
+        #region Memory Functions
+        /// <summary>
+        /// Saves the file.
+        /// </summary>
+        void SaveFile()
+        {
+
+        }
+
+        /// <summary>
+        /// Loads the file.
+        /// </summary>
+        void LoadFile()
+        {
+
+        }
+        #endregion
     }
 }
