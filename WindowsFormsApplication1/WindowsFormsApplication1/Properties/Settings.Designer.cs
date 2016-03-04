@@ -118,5 +118,17 @@ namespace WindowsFormsApplication1.Properties {
                 this["isFinite"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int msPerTick {
+            get {
+                return ((int)(this["msPerTick"]));
+            }
+            set {
+                this["msPerTick"] = value;
+            }
+        }
     }
 }

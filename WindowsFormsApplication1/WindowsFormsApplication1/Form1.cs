@@ -1,41 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        delegate int chosenLogic(Point pos);
-        chosenLogic checkSurrounding;
+        #region fields + Constructor
+
+        private static Random r = new Random();
+
+        private delegate int chosenLogic(Point pos);
+
+        private chosenLogic checkSurrounding;
+
         /// <summary>
         /// The universe is stored as [rows, columns]
         /// </summary>
-        bool[,] universe;
-        bool isHighlighted = Properties.Settings.Default.isHighlighted, isFinite = Properties.Settings.Default.isFinite;
-        int rows = Properties.Settings.Default.Rows, columns = Properties.Settings.Default.Columns;
-        Color deadColor = Properties.Settings.Default.DeadColor;
-        Color livingColor = Properties.Settings.Default.LivingColor;
-        Color gridColor = Properties.Settings.Default.GridColor;
-        Color highlightedGridColor = Properties.Settings.Default.HGridColor;
+        private bool[,] universe;
+
+        private bool isHighlighted = Properties.Settings.Default.isHighlighted, isFinite = Properties.Settings.Default.isFinite;
+        private int rows = Properties.Settings.Default.Rows, columns = Properties.Settings.Default.Columns, msPerTick = Properties.Settings.Default.msPerTick;
+        private Color deadColor = Properties.Settings.Default.DeadColor;
+        private Color livingColor = Properties.Settings.Default.LivingColor;
+        private Color gridColor = Properties.Settings.Default.GridColor;
+        private Color highlightedGridColor = Properties.Settings.Default.HGridColor;
+
         //Variables for mouseMove event
-        Point lastChanged = new Point();
-        Point thisChanged = new Point();
+        private Point lastChanged = new Point();
+
+        private Point thisChanged = new Point();
+        private int generation, seed = r.Next(), alive;
+
         public Form1()
         {
             InitializeComponent();
             universe = new bool[rows, columns];
             DBP.BackColor = deadColor;
+            gameTick.Interval = msPerTick;
             if (isFinite)
                 checkSurrounding = getFWLiving;
             else checkSurrounding = getTWliving;
         }
+
+        #endregion fields + Constructor
+
+        #region Single Line Functions
 
         private void Form1_Resize(object sender, EventArgs e)
         {
@@ -54,6 +64,37 @@ namespace WindowsFormsApplication1
             DBP.Invalidate();
         }
 
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gameTick.Enabled = true;
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gameTick.Enabled = false;
+        }
+
+        private void gameTick_Tick(object sender, EventArgs e)
+        {
+            doGenerationLogic();
+        }
+
+        private void nextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            doGenerationLogic();
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsForm oForm = new OptionsForm(new golEventArgs(deadColor, livingColor, gridColor, highlightedGridColor, isHighlighted, isFinite, rows, columns, msPerTick));
+            oForm.returningInformation = informationReturn;
+            oForm.ShowDialog();
+        }
+
+        #endregion Single Line Functions
+
+        #region DBP functions
+
         private void DBP_MouseMove(object sender, MouseEventArgs e)
         {
             float collumnWidth, rowHeight;
@@ -66,19 +107,17 @@ namespace WindowsFormsApplication1
                 if (e.Button == MouseButtons.Left && !thisChanged.Equals(lastChanged))
                 {
                     universe[thisChanged.Y, thisChanged.X] = !universe[thisChanged.Y, thisChanged.X];
+                    if (universe[thisChanged.Y, thisChanged.X])
+                        alive++;
+                    else alive--;
                     lastChanged = thisChanged;
                     DBP.Invalidate();
                 }
             }
             catch (Exception)
             {
-
             }
-        }
-
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
+            LivingCount.Text = "Alive: " + alive;
         }
 
         private void customControl11_Paint(object sender, PaintEventArgs e)
@@ -91,7 +130,7 @@ namespace WindowsFormsApplication1
             float seperatorPos = 0;
             for (int i = 0; i < columns; i++)
             {
-                if(i % 5 == 0 && isHighlighted)
+                if (i % 5 == 0 && isHighlighted)
                 {
                     e.Graphics.DrawLine(bigPen, seperatorPos, 0f, seperatorPos, DBP.Height);
                 }
@@ -118,7 +157,6 @@ namespace WindowsFormsApplication1
                 {
                     if (universe[i, j])
                     {
-                        
                         Rectangle temp = new Rectangle((int)((j * collumnWidth + 1)), (int)((i * rowHeight) + 1), (int)(collumnWidth + 1), (int)(rowHeight + 1));
                         e.Graphics.FillRectangle(new SolidBrush(livingColor), temp);
                     }
@@ -126,32 +164,16 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void runToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            gameTick.Enabled = true;
-        }
+        #endregion DBP functions
 
-        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            gameTick.Enabled = false;
-        }
-
-        private void gameTick_Tick(object sender, EventArgs e)
-        {
-            doGenerationLogic();
-        }
-
-        private void nextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            doGenerationLogic();
-        }
+        #region GoL Logical Functions
 
         /// <summary>
         /// Gets the finite world count of living cells around a position.
         /// </summary>
         /// <param name="pos">The position of the currently selected cell.</param>
         /// <returns></returns>
-        int getFWLiving(Point pos)
+        private int getFWLiving(Point pos)
         {
             int livingCount = 0;
             for (int i = pos.X - 1; i <= pos.X + 1; i++)
@@ -160,7 +182,7 @@ namespace WindowsFormsApplication1
                     continue;
                 for (int j = pos.Y - 1; j <= pos.Y + 1; j++)
                 {
-                    if (j < 0 || j >= columns ||(j == pos.Y && i == pos.X))
+                    if (j < 0 || j >= columns || (j == pos.Y && i == pos.X))
                         continue;
                     else if (universe[i, j])
                         livingCount++;
@@ -174,7 +196,7 @@ namespace WindowsFormsApplication1
         /// </summary>
         /// <param name="pos">The position that is checked around.</param>
         /// <returns></returns>
-        int getTWliving(Point pos)
+        private int getTWliving(Point pos)
         {
             int livingCount = 0;
             int iTemp, jTemp;
@@ -183,16 +205,16 @@ namespace WindowsFormsApplication1
                 iTemp = i;
                 if (i < 0)
                     iTemp = rows - 1;
-                else if(i >= rows)
+                else if (i >= rows)
                     iTemp = 0;
                 for (int j = pos.Y - 1; j <= pos.Y + 1; j++)
                 {
                     jTemp = j;
-                    if (j < 0 )
+                    if (j < 0)
                     {
                         jTemp = columns - 1;
                     }
-                    else if(j >= columns)
+                    else if (j >= columns)
                     {
                         jTemp = 0;
                     }
@@ -203,13 +225,29 @@ namespace WindowsFormsApplication1
             return livingCount;
         }
 
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Gets the amount of living cells.
+        /// </summary>
+        /// <returns></returns>
+        private int getLiving()
         {
-            OptionsForm oForm = new OptionsForm(new golEventArgs(deadColor, livingColor, gridColor, highlightedGridColor, isHighlighted, isFinite, rows, columns));
-            oForm.returningInformation = informationReturn;
-            oForm.ShowDialog();
+            int livingCount = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (universe[i, j])
+                        livingCount++;
+                }
+            }
+            return livingCount;
         }
 
+        /// <summary>
+        /// Handles the return of information.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="golEventArgs"/> instance containing the event data.</param>
         public void informationReturn(object sender, golEventArgs e)
         {
             deadColor = e.deadColor;
@@ -220,6 +258,7 @@ namespace WindowsFormsApplication1
             isFinite = e.isFiniteWorld;
             rows = e.rowCount;
             columns = e.columnCount;
+            msPerTick = gameTick.Interval = e.msPerTick;
             DBP.BackColor = deadColor;
             if (isFinite)
                 checkSurrounding = getFWLiving;
@@ -233,6 +272,7 @@ namespace WindowsFormsApplication1
             Properties.Settings.Default.Columns = columns;
             Properties.Settings.Default.isHighlighted = isHighlighted;
             Properties.Settings.Default.isFinite = isFinite;
+            Properties.Settings.Default.msPerTick = msPerTick;
             Properties.Settings.Default.Save();
             DBP.Invalidate();
         }
@@ -240,7 +280,7 @@ namespace WindowsFormsApplication1
         /// <summary>
         /// Holds logic for updating the game through each generation.
         /// </summary>
-        void doGenerationLogic()
+        private void doGenerationLogic()
         {
             /// <summary>
             /// The temporary universe is stored as [rows, columns]
@@ -258,18 +298,26 @@ namespace WindowsFormsApplication1
                                 tempUniverse[i, j] = true;
                             else tempUniverse[i, j] = false;
                             break;
+
                         case 3:
                             tempUniverse[i, j] = true;
                             break;
+
                         default:
                             tempUniverse[i, j] = false;
                             break;
                     }
-
                 }
             }
+            alive = getLiving();
+            GenerationLabel.Text = "Generation: " + ++generation;
+            LivingCount.Text = "Alive: " + alive;
+            intervalLabel.Text = "Interval: " + msPerTick;
+            SeedLabel.Text = "Seed " + seed;
             universe = tempUniverse;
             DBP.Invalidate();
         }
+
+        #endregion GoL Logical Functions
     }
 }

@@ -57,12 +57,19 @@
             this.toriodal = new System.Windows.Forms.RadioButton();
             this.finite = new System.Windows.Forms.RadioButton();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.timer = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.timerTicks = new System.Windows.Forms.NumericUpDown();
             this.tabControl1.SuspendLayout();
             this.colorOptions.SuspendLayout();
             this.gridOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowCount)).BeginInit();
             this.edgeOptions.SuspendLayout();
+            this.timer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.timerTicks)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -70,6 +77,7 @@
             this.tabControl1.Controls.Add(this.colorOptions);
             this.tabControl1.Controls.Add(this.gridOptions);
             this.tabControl1.Controls.Add(this.edgeOptions);
+            this.tabControl1.Controls.Add(this.timer);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -390,6 +398,68 @@
             this.finite.Text = "FiniteWorld";
             this.finite.UseVisualStyleBackColor = true;
             // 
+            // timer
+            // 
+            this.timer.Controls.Add(this.timerTicks);
+            this.timer.Controls.Add(this.button1);
+            this.timer.Controls.Add(this.button2);
+            this.timer.Controls.Add(this.button3);
+            this.timer.Location = new System.Drawing.Point(4, 22);
+            this.timer.Name = "timer";
+            this.timer.Size = new System.Drawing.Size(256, 149);
+            this.timer.TabIndex = 3;
+            this.timer.Text = "Timer";
+            this.timer.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(170, 118);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Cancel";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(89, 118);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Reset";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(8, 118);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "OK";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // timerTicks
+            // 
+            this.timerTicks.Location = new System.Drawing.Point(64, 58);
+            this.timerTicks.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.timerTicks.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.timerTicks.Name = "timerTicks";
+            this.timerTicks.Size = new System.Drawing.Size(120, 20);
+            this.timerTicks.TabIndex = 16;
+            this.timerTicks.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,6 +477,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.rowCount)).EndInit();
             this.edgeOptions.ResumeLayout(false);
             this.edgeOptions.PerformLayout();
+            this.timer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.timerTicks)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -442,5 +514,10 @@
         private System.Windows.Forms.Button cancel3Button;
         private System.Windows.Forms.Button reset3Button;
         private System.Windows.Forms.Button accept3Button;
+        private System.Windows.Forms.TabPage timer;
+        private System.Windows.Forms.NumericUpDown timerTicks;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
