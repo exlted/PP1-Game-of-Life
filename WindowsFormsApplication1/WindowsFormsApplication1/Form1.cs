@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
         /// The universe is stored as [rows, columns]
         /// </summary>
         bool[,] universe;
-        bool isHighlighted = true, isFinite = true;
+        bool isHighlighted = true, isFinite = false;
         public int rows, columns;
         public Color deadColor = Color.White;
         public Color livingColor = Color.Black;
@@ -30,9 +30,11 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-            rows = columns = 100;
+            rows = columns = 10;
             universe = new bool[rows, columns];
-            checkSurrounding = getFWLiving;
+            if (isFinite)
+                checkSurrounding = getFWLiving;
+            else checkSurrounding = getTWliving;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -169,7 +171,31 @@ namespace WindowsFormsApplication1
 
         int getTWliving(Point pos)
         {
-            return 3;
+            int livingCount = 0;
+            int iTemp, jTemp;
+            for (int i = pos.X - 1; i <= pos.X + 1; i++)
+            {
+                iTemp = i;
+                if (i < 0)
+                    iTemp = rows - 1;
+                else if(i >= rows)
+                    iTemp = 0;
+                for (int j = pos.Y - 1; j <= pos.Y + 1; j++)
+                {
+                    jTemp = j;
+                    if (j < 0 )
+                    {
+                        jTemp = columns - 1;
+                    }
+                    else if(j >= columns)
+                    {
+                        jTemp = 0;
+                    }
+                    if (universe[iTemp, jTemp] && !(j == pos.Y && i == pos.X))
+                        livingCount++;
+                }
+            }
+            return livingCount;
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -193,6 +219,7 @@ namespace WindowsFormsApplication1
             if (isFinite)
                 checkSurrounding = getFWLiving;
             else checkSurrounding = getTWliving;
+            universe = new bool[rows, columns];
             DBP.Invalidate();
         }
 
