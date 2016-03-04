@@ -18,20 +18,20 @@ namespace WindowsFormsApplication1
         /// The universe is stored as [rows, columns]
         /// </summary>
         bool[,] universe;
-        bool isHighlighted = true, isFinite = false;
-        public int rows, columns;
-        public Color deadColor = Color.White;
-        public Color livingColor = Color.Black;
-        public Color gridColor = Color.Black;
-        public Color highlightedGridColor = Color.Black;
+        bool isHighlighted = Properties.Settings.Default.isHighlighted, isFinite = Properties.Settings.Default.isFinite;
+        int rows = Properties.Settings.Default.Rows, columns = Properties.Settings.Default.Columns;
+        Color deadColor = Properties.Settings.Default.DeadColor;
+        Color livingColor = Properties.Settings.Default.LivingColor;
+        Color gridColor = Properties.Settings.Default.GridColor;
+        Color highlightedGridColor = Properties.Settings.Default.HGridColor;
         //Variables for mouseMove event
         Point lastChanged = new Point();
         Point thisChanged = new Point();
         public Form1()
         {
             InitializeComponent();
-            rows = columns = 10;
             universe = new bool[rows, columns];
+            DBP.BackColor = deadColor;
             if (isFinite)
                 checkSurrounding = getFWLiving;
             else checkSurrounding = getTWliving;
@@ -225,6 +225,15 @@ namespace WindowsFormsApplication1
                 checkSurrounding = getFWLiving;
             else checkSurrounding = getTWliving;
             universe = new bool[rows, columns];
+            Properties.Settings.Default.DeadColor = deadColor;
+            Properties.Settings.Default.LivingColor = livingColor;
+            Properties.Settings.Default.GridColor = gridColor;
+            Properties.Settings.Default.HGridColor = highlightedGridColor;
+            Properties.Settings.Default.Rows = rows;
+            Properties.Settings.Default.Columns = columns;
+            Properties.Settings.Default.isHighlighted = isHighlighted;
+            Properties.Settings.Default.isFinite = isFinite;
+            Properties.Settings.Default.Save();
             DBP.Invalidate();
         }
 

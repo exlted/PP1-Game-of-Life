@@ -257,6 +257,7 @@
             this.cancel2Button.TabIndex = 9;
             this.cancel2Button.Text = "Cancel";
             this.cancel2Button.UseVisualStyleBackColor = true;
+            this.cancel2Button.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // reset2Button
             // 
@@ -266,6 +267,7 @@
             this.reset2Button.TabIndex = 8;
             this.reset2Button.Text = "Reset";
             this.reset2Button.UseVisualStyleBackColor = true;
+            this.reset2Button.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // accept2Button
             // 
@@ -275,6 +277,7 @@
             this.accept2Button.TabIndex = 7;
             this.accept2Button.Text = "OK";
             this.accept2Button.UseVisualStyleBackColor = true;
+            this.accept2Button.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // colCount
             // 
@@ -343,6 +346,7 @@
             this.cancel3Button.TabIndex = 12;
             this.cancel3Button.Text = "Cancel";
             this.cancel3Button.UseVisualStyleBackColor = true;
+            this.cancel3Button.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // reset3Button
             // 
@@ -352,6 +356,7 @@
             this.reset3Button.TabIndex = 11;
             this.reset3Button.Text = "Reset";
             this.reset3Button.UseVisualStyleBackColor = true;
+            this.reset3Button.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // accept3Button
             // 
@@ -361,6 +366,7 @@
             this.accept3Button.TabIndex = 10;
             this.accept3Button.Text = "OK";
             this.accept3Button.UseVisualStyleBackColor = true;
+            this.accept3Button.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // toriodal
             // 
