@@ -169,6 +169,11 @@ namespace WindowsFormsApplication1
             return livingCount;
         }
 
+        /// <summary>
+        /// Gets the toroidal world count of living cells around a position.
+        /// </summary>
+        /// <param name="pos">The position that is checked around.</param>
+        /// <returns></returns>
         int getTWliving(Point pos)
         {
             int livingCount = 0;
