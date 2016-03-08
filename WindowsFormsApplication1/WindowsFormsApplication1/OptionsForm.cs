@@ -52,6 +52,7 @@ namespace WindowsFormsApplication1
 
         private void panelBackgroundColor_Click(object sender, EventArgs e)
         {
+            colorDialog1.Color = (sender as Button).BackColor;
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 (sender as Button).BackColor = colorDialog1.Color;
