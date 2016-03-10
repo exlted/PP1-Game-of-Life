@@ -13,14 +13,18 @@ namespace WindowsFormsApplication1
         private static Random r = new Random();
 
         private delegate int chosenLogic(Point pos);
-
+        /// <summary>
+        /// Holds the command to check the surrounding cells for GoL logic
+        /// </summary>
         private chosenLogic checkSurrounding;
 
         /// <summary>
         /// The universe is stored as [rows, columns]
         /// </summary>
         private bool[,] universe;
-
+        /// <summary>
+        /// Exists to allow minor threading
+        /// </summary>
         private bool midUpdate = false;
 
         private bool isHighlighted = Properties.Settings.Default.isHighlighted, isFinite = Properties.Settings.Default.isFinite;
@@ -29,12 +33,16 @@ namespace WindowsFormsApplication1
         private Color livingColor = Properties.Settings.Default.LivingColor;
         private Color gridColor = Properties.Settings.Default.GridColor;
         private Color highlightedGridColor = Properties.Settings.Default.HGridColor;
-
-        //Variables for mouseMove event
-        private Point lastChanged = new Point();
-
-        private Point thisChanged = new Point();
         private int generation, seed = r.Next(), alive;
+
+        /// <summary>
+        /// The previously changed point so Mouse_Move doesn't cause flicker
+        /// </summary>
+        private Point lastChanged = new Point();
+        /// <summary>
+        /// The currently changed point to check against lastChanged
+        /// </summary>
+        private Point thisChanged = new Point();
 
         public Form1()
         {
@@ -50,51 +58,87 @@ namespace WindowsFormsApplication1
         #endregion fields + Constructor
 
         #region Single Line Functions
-
+        /// <summary>
+        /// Handles the Resize event of the Form1 control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void Form1_Resize(object sender, EventArgs e)
         {
             DBP.Invalidate();
         }
-
+        /// <summary>
+        /// Handles the Click event of the exitToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
+        /// <summary>
+        /// Handles the Click event of the newToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             universe = new bool[rows, columns];
             gameTick.Enabled = false;
             DBP.Invalidate();
         }
-
+        /// <summary>
+        /// Handles the Click event of the runToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gameTick.Enabled = true;
         }
-
+        /// <summary>
+        /// Handles the Click event of the pauseToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gameTick.Enabled = false;
         }
-
+        /// <summary>
+        /// Handles the Tick event of the gameTick control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void gameTick_Tick(object sender, EventArgs e)
         {
             doGenerationLogic();
         }
-
+        /// <summary>
+        /// Handles the Click event of the nextToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void nextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             doGenerationLogic();
         }
-
+        /// <summary>
+        /// Handles the Click event of the optionsToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OptionsForm oForm = new OptionsForm(new golEventArgs(deadColor, livingColor, gridColor, highlightedGridColor, isHighlighted, isFinite, rows, columns, msPerTick));
             oForm.returningInformation = informationReturn;
             oForm.ShowDialog();
         }
-
+        /// <summary>
+        /// Handles the Click event of the randomizeToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void randomizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             seed = r.Next();
@@ -111,22 +155,34 @@ namespace WindowsFormsApplication1
             alive = getLiving();
             DBP.Invalidate();
         }
-
+        /// <summary>
+        /// Handles the Click event of the openToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoadFile();
         }
-
+        /// <summary>
+        /// Handles the Click event of the saveToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFile();
         }
 
-    #endregion Single Line Functions
+        #endregion Single Line Functions
 
         #region DBP functions
-
-    private void DBP_MouseMove(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Handles the MouseMove event of the DBP control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+        private void DBP_MouseMove(object sender, MouseEventArgs e)
         {
             float collumnWidth, rowHeight;
             collumnWidth = (float)DBP.Width / columns;
@@ -178,7 +234,12 @@ namespace WindowsFormsApplication1
             }
         }
 
-    private void customControl11_Paint(object sender, PaintEventArgs e)
+        /// <summary>
+        /// Handles the Paint event of the customControl11 control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
+        private void customControl11_Paint(object sender, PaintEventArgs e)
         {
             GenerationLabel.Text = "Generation: " + ++generation;
             LivingCount.Text = "Alive: " + alive;
