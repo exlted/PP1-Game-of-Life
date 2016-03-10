@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
@@ -577,24 +578,21 @@ namespace WindowsFormsApplication1
                 // It appends a CRLF for you.
                 writer.WriteLine("!This is my comment.");
 
+                Point[] minSize = getUniverseMinSize();
                 // Iterate through the universe one row at a time.
-                for (int y = 0; y < rows; y++)
+                for (int y = minSize[0].Y; y < minSize[1].Y; y++)
      {
                     // Create a string to represent the current row.
-                    String currentRow = string.Empty;
+                    StringBuilder newLine = new StringBuilder();
 
                     // Iterate through the current row one cell at a time.
-                    for (int x = 0; x < columns; x++)
+                    for (int x = minSize[0].X; x < minSize[1].X; x++)
           {
-                        // If the universe[x,y] is alive then append 'O' (capital O)
-                        // to the row string.
-
-                        // Else if the universe[x,y] is dead then append '.' (period)
-                        // to the row string.
+                        if (universe[y, x])
+                            newLine.Append('O');
+                        else newLine.Append('.');
                     }
-
-                    // Once the current row has been read through and the
-                    // string constructed then write it to the file using WriteLine.
+                    writer.WriteLine(newLine.ToString());
                 }
 
                 // After all rows and columns have been written then close the file.
