@@ -19,6 +19,8 @@ namespace WindowsFormsApplication1
         /// </summary>
         private bool[,] universe;
 
+        private bool midUpdate = false;
+
         private bool isHighlighted = Properties.Settings.Default.isHighlighted, isFinite = Properties.Settings.Default.isFinite;
         private int rows = Properties.Settings.Default.Rows, columns = Properties.Settings.Default.Columns, msPerTick = Properties.Settings.Default.msPerTick;
         private Color deadColor = Properties.Settings.Default.DeadColor;
@@ -135,8 +137,36 @@ namespace WindowsFormsApplication1
             {
             }
         }
+        /// <summary>
+        /// Handles the MouseDown event of the DBP control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+        private void DBP_MouseDown(object sender, MouseEventArgs e)
+        {
+            float collumnWidth, rowHeight;
+            collumnWidth = (float)DBP.Width / columns;
+            rowHeight = (float)DBP.Height / rows;
+            thisChanged.Y = (int)(e.Y / rowHeight);
+            thisChanged.X = (int)(e.X / collumnWidth);
+            try
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    universe[thisChanged.Y, thisChanged.X] = !universe[thisChanged.Y, thisChanged.X];
+                    if (universe[thisChanged.Y, thisChanged.X])
+                        alive++;
+                    else alive--;
+                    lastChanged = thisChanged;
+                    DBP.Invalidate();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
 
-        private void customControl11_Paint(object sender, PaintEventArgs e)
+    private void customControl11_Paint(object sender, PaintEventArgs e)
         {
             GenerationLabel.Text = "Generation: " + ++generation;
             LivingCount.Text = "Alive: " + alive;
@@ -283,9 +313,7 @@ namespace WindowsFormsApplication1
             else checkSurrounding = getTWliving;
             if(rows!=e.rowCount && columns !=e.columnCount)
             {
-                rows = e.rowCount;
-                columns = e.columnCount;
-                universe = new bool[rows, columns];
+                resizeUniverse(e.columnCount, e.rowCount);
             }
             Properties.Settings.Default.DeadColor = deadColor;
             Properties.Settings.Default.LivingColor = livingColor;
@@ -305,6 +333,7 @@ namespace WindowsFormsApplication1
         /// </summary>
         private void doGenerationLogic()
         {
+            midUpdate = true;
             /// <summary>
             /// The temporary universe is stored as [rows, columns]
             /// </summary>
@@ -335,6 +364,175 @@ namespace WindowsFormsApplication1
             alive = getLiving();
             universe = tempUniverse;
             DBP.Invalidate();
+            midUpdate = false;
+        }
+
+        /// <summary>
+        /// Resizes the universe can be done without pausing the simulation.
+        /// </summary>
+        /// <param name="width">The width of the new universe.</param>
+        /// <param name="height">The height of the new universe.</param>
+        private bool resizeUniverse(int width, int height)
+        {
+            bool wasEnabled = false;
+            if (gameTick.Enabled)
+            {
+                gameTick.Enabled = false;
+                wasEnabled = true;
+            }
+            while (midUpdate) //Waits until current update thread finishes
+            {
+                System.Threading.Thread.Sleep(5);
+            }
+            Point[] minSize = getUniverseMinSize();
+            int minWidth = minSize[1].X - minSize[0].X, minHeight = minSize[1].Y - minSize[0].Y;
+            if(minWidth > width || minHeight > height)
+            {
+                if (MessageBox.Show("New size too small, universe will reset", "Warning", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    rows = height;
+                    columns = width;
+                    universe = new bool[rows, columns];
+                    return true;
+                }
+                else return false;
+            }
+            bool[,] temp = new bool[minHeight, minWidth];
+            int rowPos = 0, colPos = 0;
+            for (int i = minSize[0].Y; i < minSize[1].Y; i++)
+            {
+                for (int j = minSize[0].X; j < minSize[1].X; j++)
+                {
+                    temp[rowPos, colPos] = universe[i, j];
+                    colPos++;
+                }
+                colPos = 0;
+                rowPos++;
+            }
+            rows = height;
+            columns = width;
+            universe = importToUniverse(width, height, minHeight, minWidth, temp);
+            if(wasEnabled)
+                gameTick.Enabled = true;
+            return true;
+        }
+
+        /// <summary>
+        /// Imports to universe.
+        /// </summary>
+        /// <param name="newWidth">The new width.</param>
+        /// <param name="newHeight">The new height.</param>
+        /// <param name="minHeight">The minimum height.</param>
+        /// <param name="minWidth">The minimum width.</param>
+        /// <param name="import">The imported universe.</param>
+        /// <returns></returns>
+        private bool[,] importToUniverse(float newWidth, float newHeight, float minHeight, float minWidth, bool[,] import)
+        {
+            int rowPos = 0, colPos = 0;
+            bool[,] tempUniverse = new bool[(int)newHeight, (int)newWidth];
+            if (minHeight != 1 && minWidth != 1)
+            {
+                for (float i = (newHeight / 2) - (minHeight / 2); i < (newHeight / 2) + (minHeight / 2); i++)
+                {
+                    for (float j = (newWidth / 2) - (minWidth / 2); j < (newWidth / 2) + (minWidth / 2); j++)
+                    {
+                        tempUniverse[(int)i, (int)j] = import[rowPos, colPos];
+                        colPos++;
+                    }
+                    colPos = 0;
+                    rowPos++;
+                }
+            }
+            else if(minHeight != 1 && minWidth == 1)
+            {
+                float j = (newWidth / 2) - (minWidth / 2);
+                for (float i = (newHeight / 2) - (minHeight / 2); i < (newHeight / 2) + (minHeight / 2); i++)
+                {
+                    tempUniverse[(int)i, (int)j] = import[rowPos, colPos];
+                    rowPos++;
+                }
+            }
+            else if(minHeight == 1 && minWidth != 1)
+            {
+                float i = (newHeight / 2) - (minHeight / 2);
+                for (float j = (newWidth / 2) - (minWidth / 2); j < (newWidth / 2) + (minWidth / 2); j++)
+                {
+                    tempUniverse[(int)i, (int)j] = import[rowPos, colPos];
+                    colPos++;
+                }
+            }
+            else
+            {
+                float j = (newWidth / 2) - (minWidth / 2);
+                float i = (newHeight / 2) - (minHeight / 2);
+                tempUniverse[(int)i, (int)j] = import[rowPos, colPos];
+            }
+            return tempUniverse;
+        }
+
+        /// <summary>
+        /// Gets the minimum size of the universe.
+        /// </summary>
+        /// <returns></returns>
+        private Point[] getUniverseMinSize()
+        {
+            Point[] temp = new Point[2];
+            temp[0].X = 0; temp[0].Y = 0; temp[1].X = 0; temp[1].Y = 0;
+            bool found = false;
+
+            for (int i = 0; i < columns && !found; i++)
+            {
+                for (int j = 0; j < rows && !found; j++)
+                {
+                    if(universe[j, i])
+                    {
+                        found = true;
+                        temp[0].X = i;
+                    }
+                }
+            }
+
+            found = false;
+            for (int i = 0; i < rows && !found; i++)
+            {
+                for (int j = 0; j < columns && !found; j++)
+                {
+                    if (universe[i, j])
+                    {
+                        found = true;
+                        temp[0].Y = i;
+                    }
+                }
+            }
+
+            found = false;
+            for (int i = columns - 1; i >= 0 && !found; i--)
+            {
+                for (int j = rows - 1; j >= 0 && !found; j--)
+                {
+                    if (universe[j, i])
+                    {
+                        found = true;
+                        temp[1].X = i + 1;
+                    }
+                }
+            }
+
+            found = false;
+            for (int i = rows - 1; i >= 0 && !found; i--)
+            {
+                for (int j = columns - 1; j >= 0 && !found; j--)
+                {
+                    if (universe[i, j])
+                    {
+                        found = true;
+                        temp[1].Y = i + 1;
+                    }
+                }
+            }
+
+
+            return temp;
         }
 
         #endregion GoL Logical Functions

@@ -12,7 +12,11 @@ namespace WindowsFormsApplication1
         public OptionsForm(golEventArgs input)
         {
             InitializeComponent();
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             previousData = input;
+            StartPosition = FormStartPosition.CenterScreen;
             panelBackgroundColor.BackColor = previousData.deadColor;
             livingCellColor.BackColor = previousData.livingColor;
             normalGridColor.BackColor = previousData.gridColor;
@@ -57,6 +61,19 @@ namespace WindowsFormsApplication1
             {
                 (sender as Button).BackColor = colorDialog1.Color;
             }
+        }
+
+        private void OptionsForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                acceptButton_Click(this, new EventArgs());
+            else if (e.KeyChar == (char)Keys.Escape)
+                cancelButton_Click(this, new EventArgs());
+        }
+
+        private void rowCount_Enter(object sender, EventArgs e)
+        {
+            (sender as NumericUpDown).Select(0, (sender as NumericUpDown).Text.Length);
         }
     }
 
