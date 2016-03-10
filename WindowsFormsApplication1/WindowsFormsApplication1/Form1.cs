@@ -112,11 +112,21 @@ namespace WindowsFormsApplication1
             DBP.Invalidate();
         }
 
-        #endregion Single Line Functions
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadFile();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+
+    #endregion Single Line Functions
 
         #region DBP functions
 
-        private void DBP_MouseMove(object sender, MouseEventArgs e)
+    private void DBP_MouseMove(object sender, MouseEventArgs e)
         {
             float collumnWidth, rowHeight;
             collumnWidth = (float)DBP.Width / columns;
@@ -419,17 +429,24 @@ namespace WindowsFormsApplication1
             return true;
         }
 
+        /// <summary>
+        /// Resizes the universe, taking in an imported universe from Load().
+        /// </summary>
+        /// <param name="minWidth">The minimum width.</param>
+        /// <param name="minHeight">The minimum height.</param>
+        /// <param name="importedUniverse">The imported universe.</param>
+        /// <returns></returns>
         private bool resizeUniverse(int minWidth, int minHeight, bool[,] importedUniverse)
         {
             gameTick.Enabled = false;
 
             if (minWidth > columns || minHeight > rows)
             {
-                if (MessageBox.Show("New size too small, universe will reset", "Warning", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (MessageBox.Show("Universe too small, universe will resize", "Warning", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     rows = minHeight;
                     columns = minWidth;
-                    universe = new bool[rows, columns];
+                    universe = importedUniverse;
                     return true;
                 }
                 else return false;
@@ -459,6 +476,7 @@ namespace WindowsFormsApplication1
                     {
                         tempUniverse[(int)i, (int)j] = import[rowPos, colPos];
                         colPos++;
+                        DBP.Invalidate();
                     }
                     colPos = 0;
                     rowPos++;
@@ -572,22 +590,14 @@ namespace WindowsFormsApplication1
             {
                 StreamWriter writer = new StreamWriter(dlg.FileName);
 
-                // Write any comments you want to include first.
-                // Prefix all comment strings with an exclamation point.
-                // Use WriteLine to write the strings to the file.
-                // It appends a CRLF for you.
                 writer.WriteLine("!This is my comment.");
 
                 Point[] minSize = getUniverseMinSize();
-                // Iterate through the universe one row at a time.
                 for (int y = minSize[0].Y; y < minSize[1].Y; y++)
-     {
-                    // Create a string to represent the current row.
+                    {
                     StringBuilder newLine = new StringBuilder();
-
-                    // Iterate through the current row one cell at a time.
                     for (int x = minSize[0].X; x < minSize[1].X; x++)
-          {
+                    {
                         if (universe[y, x])
                             newLine.Append('O');
                         else newLine.Append('.');
@@ -644,8 +654,10 @@ namespace WindowsFormsApplication1
                         else if (row[xPos] == '.')
                             tempUniverse[rowPos, xPos] = false;
                     }
+                    rowPos++;
                 }
                 resizeUniverse(maxWidth, maxHeight, tempUniverse);
+                DBP.Invalidate();
                 reader.Close();
             }
         }
