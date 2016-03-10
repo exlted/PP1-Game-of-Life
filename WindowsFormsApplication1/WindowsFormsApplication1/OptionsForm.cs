@@ -6,6 +6,7 @@ namespace WindowsFormsApplication1
 {
     public partial class OptionsForm : Form
     {
+        #region Fields and Constructors
         public EventHandler<golEventArgs> returningInformation;
         public golEventArgs previousData;
 
@@ -30,7 +31,8 @@ namespace WindowsFormsApplication1
                 finite.Checked = true;
             else toriodal.Checked = true;
         }
-
+        #endregion
+        #region Click Events
         private void acceptButton_Click(object sender, EventArgs e)
         {
             returningInformation(this, new golEventArgs(panelBackgroundColor.BackColor, livingCellColor.BackColor, normalGridColor.BackColor, highlightedGridColor.BackColor, isGridHighlighted.Checked, finite.Checked, (int)rowCount.Value, (int)colCount.Value, (int)timerTicks.Value));
@@ -70,7 +72,12 @@ namespace WindowsFormsApplication1
             else if (e.KeyChar == (char)Keys.Escape)
                 cancelButton_Click(this, new EventArgs());
         }
-
+        #endregion
+        /// <summary>
+        /// Selects all the text on any NumericUpDown_Enter event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void rowCount_Enter(object sender, EventArgs e)
         {
             (sender as NumericUpDown).Select(0, (sender as NumericUpDown).Text.Length);
